@@ -9,13 +9,15 @@ public class AssetLoader : MonoBehaviour
 
     /// modify projectPath string to own project path. 
     [Header("프로젝트 열기 경로")]
-    public string projectPath = "/Users/shinjeongmin/Documents/UnityProjects/LoadModule";
+    public string projectPath;
     public string assetName = "bunny";
 
     private void Start()
     {
+        projectPath = Application.dataPath;
+
         // OpenFilePanel's root directory is "Assets"
-        string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Assets/Models" , "obj");
+        string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
         // string relativePath = selectedAssetName.Replace(projectPath + '/', "");
         Debug.Log(selectedAssetName);
 

@@ -7,19 +7,16 @@ public class AssetLoader : MonoBehaviour
     [field: SerializeField]
     public LoaderModule LoaderModule { get; set; }
 
-    /// modify projectPath string to own project path. 
-    [Header("프로젝트 열기 경로")]
-    public string projectPath;
+    private string projectPath;
     public string assetName = "bunny";
 
     private void Start()
     {
         projectPath = Application.dataPath;
+        Debug.Log(projectPath);
 
         // OpenFilePanel's root directory is "Assets"
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
-        // string relativePath = selectedAssetName.Replace(projectPath + '/', "");
-        Debug.Log(selectedAssetName);
 
         Load(selectedAssetName);
         // LoadAsync(selectedAssetName);

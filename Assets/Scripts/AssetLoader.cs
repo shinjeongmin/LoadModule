@@ -18,13 +18,21 @@ public class AssetLoader : MonoBehaviour
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Assets/Models" , "obj");
         // string relativePath = selectedAssetName.Replace(projectPath + '/', "");
         Debug.Log(selectedAssetName);
+
         Load(selectedAssetName);
+        // LoadAsync(selectedAssetName);
     }
 
-    public void Load(string assetName)
+    public void Load(string assetName) // TODO: need to remove
     {
         LoaderModule.OnLoadCompleted += OnLoadCompleted;
         LoaderModule.LoadAsset(assetName);
+    }
+
+    public async void LoadAsync(string assetName)
+    {
+        GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
+        loadedAsset.transform.SetParent(transform);
     }
 
     private void OnLoadCompleted(GameObject loadedAsset)

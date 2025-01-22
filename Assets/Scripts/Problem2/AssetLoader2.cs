@@ -22,14 +22,14 @@ public class AssetLoader2 : MonoBehaviour
         {
             Load(selectedAssetName);
         }
-        Debug.Log("먼저 실행");
+        Debug.Log("Run earlier");
     }
 
     public async void Load(string assetName)
     {
-        Debug.Log("Load 함수");
+        Debug.Log("Load function");
         GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
-        Debug.Log("asset 반환");
+        Debug.Log("asset return");
 
         GameObject newAssetObject = Instantiate(loadedAsset, Vector3.zero, Quaternion.LookRotation(MainCamera.transform.position));
         newAssetObject.transform.SetParent(transform);

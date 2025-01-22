@@ -10,7 +10,7 @@ public class LoaderModule2 : MonoBehaviour
         Debug.Log("load asset async");
         string relativePath = SliceRelativePath(assetName);
         loadedAsset = await ObjectLoader(relativePath);
-        Debug.Log("object load ¿Ï·á");
+        Debug.Log("object load complete");
 
         return loadedAsset;
     }

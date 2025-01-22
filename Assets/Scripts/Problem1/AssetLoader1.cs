@@ -31,6 +31,7 @@ public class AssetLoader1 : MonoBehaviour
     {
         if(loadedAsset != null){
             loadedAsset.transform.SetParent(transform);
+            loadedAsset.transform.name = assetName;
             Debug.Log("Loaded Asset complete.");
         }
         else{

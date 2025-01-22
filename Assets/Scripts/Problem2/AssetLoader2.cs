@@ -31,7 +31,8 @@ public class AssetLoader2 : MonoBehaviour
         GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
         Debug.Log("asset return");
 
-        GameObject newAssetObject = Instantiate(loadedAsset, Vector3.zero, Quaternion.LookRotation(MainCamera.transform.position));
-        newAssetObject.transform.SetParent(transform);
+        //GameObject newAssetObject = Instantiate(loadedAsset, Vector3.zero, Quaternion.LookRotation(MainCamera.transform.position));
+        loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
+        loadedAsset.transform.SetParent(transform);
     }
 }

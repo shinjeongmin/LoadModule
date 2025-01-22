@@ -2,10 +2,10 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-public class AssetLoader : MonoBehaviour
+public class AssetLoader1 : MonoBehaviour
 {
     [field: SerializeField]
-    public LoaderModule LoaderModule { get; set; }
+    public LoaderModule1 LoaderModule { get; set; }
 
     private string projectPath;
     public string assetName = "bunny";
@@ -19,19 +19,12 @@ public class AssetLoader : MonoBehaviour
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
 
         Load(selectedAssetName);
-        // LoadAsync(selectedAssetName);
     }
 
-    public void Load(string assetName) // TODO: need to remove
+    public void Load(string assetName)
     {
         LoaderModule.OnLoadCompleted += OnLoadCompleted;
         LoaderModule.LoadAsset(assetName);
-    }
-
-    public async void LoadAsync(string assetName)
-    {
-        GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
-        loadedAsset.transform.SetParent(transform);
     }
 
     private void OnLoadCompleted(GameObject loadedAsset)
@@ -41,7 +34,7 @@ public class AssetLoader : MonoBehaviour
             Debug.Log("Loaded Asset complete.");
         }
         else{
-            Debug.Log("loadedAsset object is returned null.");
+            Debug.LogError("loadedAsset object is returned null.");
         }
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028305, g: 0.22571313, b: 0.3069213, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -310,8 +310,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1934319033}
-  - component: {fileID: 1934319032}
   - component: {fileID: 1934319034}
+  - component: {fileID: 1934319035}
   m_Layer: 0
   m_Name: LoadAssetManager
   m_TagString: Untagged
@@ -319,20 +319,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1934319032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1934319031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8aa95b99cf6f9400286f34d7a6e81061, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <LoaderModule>k__BackingField: {fileID: 1934319034}
-  assetName: bunny
 --- !u!4 &1934319033
 Transform:
   m_ObjectHideFlags: 0
@@ -357,6 +343,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1934319031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d39dff41ee932404a96e077eb44d9b32, type: 3}
+  m_Script: {fileID: 11500000, guid: c0dbe4805ba71fb4f8f530f81636f9fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <LoaderModule>k__BackingField: {fileID: 1934319035}
+  assetName: bunny
+--- !u!114 &1934319035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1934319031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 954b63443e30efa449277b772c9d1448, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  loadedPrefab: {fileID: 0}

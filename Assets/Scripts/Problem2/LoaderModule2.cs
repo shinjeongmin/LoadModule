@@ -1,32 +1,32 @@
-using System;
 using System.Threading.Tasks;
-using UnityEditor;
 using UnityEngine;
+using System.IO;
 
 public class LoaderModule2 : MonoBehaviour
 {
-    public Action<GameObject> OnLoadCompleted;
-    public GameObject loadedPrefab;
     private GameObject loadedAsset;
 
-    public void LoadAsset(string assetName)
-    {   
-        string relativePath = SliceRelativePath(assetName);
-        Debug.Log("LoadAsset : " + relativePath);
-        loadedPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(relativePath);
-
-        loadedAsset = Instantiate(loadedPrefab, Vector3.zero, Quaternion.LookRotation(GameObject.Find("Main Camera").gameObject.transform.position));
-        OnLoadCompleted.Invoke(loadedAsset);
-    }
     public async Task<GameObject> LoadAssetAsync(string assetName){
+        Debug.Log("load asset async");
         string relativePath = SliceRelativePath(assetName);
-        
-        // TODO: create gameobject and obj model from assetName
-        return new();
+        loadedAsset = await ObjectLoader(relativePath);
+        Debug.Log("object load ¿Ï·á");
+
+        return loadedAsset;
     }
 
     private string SliceRelativePath(string path){
+        Debug.Log("slice relative path");
         int index = path.IndexOf("Assets/Models/");
         return path.Substring(index);
+    }
+
+    private async Task<GameObject> ObjectLoader(string path)
+    {
+        string fileContent = await File.ReadAllTextAsync(path);
+        Debug.Log("object text : " + fileContent);
+        GameObject loadedObject = null;
+
+        return await Task.FromResult(loadedObject);
     }
 }

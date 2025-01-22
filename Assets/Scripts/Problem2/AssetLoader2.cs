@@ -6,7 +6,7 @@ public class AssetLoader2 : MonoBehaviour
 {
     [field: SerializeField]
     public LoaderModule2 LoaderModule { get; set; }
-
+    public GameObject MainCamera;
     private string projectPath;
     public string assetName = "bunny";
 
@@ -18,30 +18,20 @@ public class AssetLoader2 : MonoBehaviour
         // OpenFilePanel's root directory is "Assets"
         string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
 
-        Load(selectedAssetName);
-        // LoadAsync(selectedAssetName);
+        if (!string.IsNullOrEmpty(selectedAssetName))
+        {
+            Load(selectedAssetName);
+        }
+        Debug.Log("먼저 실행");
     }
 
-    public void Load(string assetName) // TODO: need to remove
+    public async void Load(string assetName)
     {
-        LoaderModule.OnLoadCompleted += OnLoadCompleted;
-        LoaderModule.LoadAsset(assetName);
-    }
-
-    public async void LoadAsync(string assetName)
-    {
+        Debug.Log("Load 함수");
         GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
-        loadedAsset.transform.SetParent(transform);
-    }
+        Debug.Log("asset 반환");
 
-    private void OnLoadCompleted(GameObject loadedAsset)
-    {
-        if(loadedAsset != null){
-            loadedAsset.transform.SetParent(transform);
-            Debug.Log("Loaded Asset complete.");
-        }
-        else{
-            Debug.Log("loadedAsset object is returned null.");
-        }
+        GameObject newAssetObject = Instantiate(loadedAsset, Vector3.zero, Quaternion.LookRotation(MainCamera.transform.position));
+        newAssetObject.transform.SetParent(transform);
     }
 }

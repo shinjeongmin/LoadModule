@@ -7,9 +7,9 @@ public class LoaderModule2 : MonoBehaviour
 {
     private GameObject loadedAsset;
 
-    public async Task<GameObject> LoadAssetAsync(string assetName){
-        Debug.Log("load asset async");
-        string relativePath = SliceRelativePath(assetName);
+    public async Task<GameObject> LoadAssetAsync(string path){
+        string relativePath = SliceRelativePath(path);
+
         loadedAsset = await ObjectLoader(relativePath);
         Debug.Log("object load complete");
 
@@ -17,11 +17,9 @@ public class LoaderModule2 : MonoBehaviour
     }
 
     private string SliceRelativePath(string path){
-        Debug.Log("slice relative path");
         int index = path.IndexOf("Assets/Models/");
         return path.Substring(index);
     }
-
 
     private async Task<GameObject> ObjectLoader(string path)
     {

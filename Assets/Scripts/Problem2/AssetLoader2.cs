@@ -13,25 +13,24 @@ public class AssetLoader2 : MonoBehaviour
     private void Start()
     {
         projectPath = Application.dataPath;
-        Debug.Log(projectPath);
 
         // OpenFilePanel's root directory is "Assets"
-        string selectedAssetName = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
+        string selectedAssetPath = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
 
-        if (!string.IsNullOrEmpty(selectedAssetName))
+        if (!string.IsNullOrEmpty(selectedAssetPath))
         {
-            Load(selectedAssetName);
+            Load(selectedAssetPath);
         }
-        Debug.Log("Run earlier");
+        Debug.Log("End Start");
     }
 
-    public async void Load(string assetName)
+    public async void Load(string path)
     {
         Debug.Log("Load function");
-        GameObject loadedAsset = await LoaderModule.LoadAssetAsync(assetName);
-        Debug.Log("asset return");
+        GameObject loadedAsset = await LoaderModule.LoadAssetAsync(path);
+        Debug.Log("Asset return");
 
-        //GameObject newAssetObject = Instantiate(loadedAsset, Vector3.zero, Quaternion.LookRotation(MainCamera.transform.position));
+        loadedAsset.name = assetName;
         loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
         loadedAsset.transform.SetParent(transform);
     }

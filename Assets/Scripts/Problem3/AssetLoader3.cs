@@ -60,6 +60,7 @@ public class AssetLoader3 : MonoBehaviour
             GameObject loadedAsset = await completedTask;
             Debug.Log("object load complete : " + loadedAsset.name);
 
+            await Task.Yield(); // yield for unity api
 
             loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
             loadedAsset.transform.SetParent(transform);

@@ -40,7 +40,6 @@ public class LoaderModule2 : MonoBehaviour
         List<Vector2> uv = new List<Vector2>();
         List<Vector3> normals = new List<Vector3>();
         bool normalExist = false;
-        bool uvExist = false;
         List<int> faces = new List<int>();
 
         // parse obj file
@@ -64,7 +63,6 @@ public class LoaderModule2 : MonoBehaviour
             // vertex texture
             else if (trimmedLine.StartsWith("vt "))
             {
-                uvExist = true;
                 string[] parts = trimmedLine.Split(' ');
                 if (parts.Length >= 3)
                 {
@@ -89,7 +87,29 @@ public class LoaderModule2 : MonoBehaviour
             // face
             else if (trimmedLine.StartsWith("f "))
             {
-                string[] parts = trimmedLine.Split(' ');
+                string[] unprocessedParts = trimmedLine.Split(' ');
+                string[] parts;
+
+                // check face is quad
+                if (unprocessedParts.Length == 5)
+                {
+                    parts = new string[7];
+                    // index 0 : 'f'
+                    parts[0] = unprocessedParts[0];
+
+                    parts[1] = unprocessedParts[1];
+                    parts[2] = unprocessedParts[2];
+                    parts[3] = unprocessedParts[3];
+
+                    parts[4] = unprocessedParts[1];
+                    parts[5] = unprocessedParts[3];
+                    parts[6] = unprocessedParts[4];
+                }
+                else // face is triangle
+                {
+                    parts = unprocessedParts;
+                }
+
                 for (int i = 1; i < parts.Length; i++)
                 {
                     string[] vertexInfo = parts[i].Split('/');
@@ -115,7 +135,7 @@ public class LoaderModule2 : MonoBehaviour
         }
 
         // mesh normal handle
-        if (normalExist)
+        if (normalExist && normals.Count == vertices.Count)
         { // apply normal data
             mesh.normals = normals.ToArray();
         }

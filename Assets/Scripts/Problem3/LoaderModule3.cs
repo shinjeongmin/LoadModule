@@ -11,10 +11,9 @@ public class LoaderModule3 : MonoBehaviour
         string relativePath = SliceRelativePath(path);
 
         loadedAsset = await ObjectLoader(relativePath);
+
         loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
-        // TODO: object rotation look at camera.
-        loadedAsset.transform.SetParent(transform);
-        Debug.Log("object load complete : " + loadedAsset.name);
+        //await Task.Yield();
 
         return loadedAsset;
     }
@@ -29,8 +28,11 @@ public class LoaderModule3 : MonoBehaviour
         string fileContent;
         try
         {
-            // read obj file
-            fileContent = await File.ReadAllTextAsync(path);
+            using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, 4096, true))
+            using (StreamReader reader = new StreamReader(fs))
+            {
+                fileContent = await reader.ReadToEndAsync();
+            }
         }
         catch(FileLoadException e)
         {

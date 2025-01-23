@@ -17,12 +17,11 @@ public class AssetLoader3 : MonoBehaviour
         projectPath = Application.dataPath;
 
         // OpenFilePanel's root directory is "Assets"
-        //string selectedAssetPath = EditorUtility.OpenFilePanel("Select obj model", projectPath + "/Models" , "obj");
         List<string> selectedAssetPaths = GetObjFiles("/Models");
 
         if(selectedAssetPaths.Count > 0) 
             Load(selectedAssetPaths);
-        Debug.Log("End Start");
+        Debug.Log("All Load Async functions called");
     }
 
     private List<string> GetObjFiles(string directory)
@@ -38,7 +37,7 @@ public class AssetLoader3 : MonoBehaviour
 
         foreach (string file in files)
         {
-            Debug.Log("ÆÄÀÏ: " + file);
+            Debug.Log("file path: " + file);
         }
 
         return files;
@@ -50,18 +49,7 @@ public class AssetLoader3 : MonoBehaviour
         Debug.Log("Load function");
         for(int i = 0; i < paths.Count; i++)
         {
-            // method 1: main thread is waiting
-            //loadTasks.Add(LoaderModule.LoadAssetAsync(paths[i]));
-
-            // method 2: 
-            await LoaderModule.LoadAssetAsync(paths[i]).ContinueWith(task =>
-            {
-                if (task.Status == TaskStatus.RanToCompletion)
-                {
-                    GameObject loadedAsset = task.Result;
-                    Debug.Log("object load complete : " + paths[i]);
-                }
-            });
+            loadTasks.Add(LoaderModule.LoadAssetAsync(paths[i]));
         }
 
         while(loadTasks.Count > 0)
@@ -70,9 +58,11 @@ public class AssetLoader3 : MonoBehaviour
             loadTasks.Remove(completedTask);
 
             GameObject loadedAsset = await completedTask;
+            Debug.Log("object load complete : " + loadedAsset.name);
 
-            //loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
-            //loadedAsset.transform.SetParent(transform);
+
+            loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
+            loadedAsset.transform.SetParent(transform);
         }
     }
 }

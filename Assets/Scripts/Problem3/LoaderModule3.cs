@@ -3,7 +3,7 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 
-public class LoaderModule2 : MonoBehaviour
+public class LoaderModule3 : MonoBehaviour
 {
     private GameObject loadedAsset;
 
@@ -11,6 +11,9 @@ public class LoaderModule2 : MonoBehaviour
         string relativePath = SliceRelativePath(path);
 
         loadedAsset = await ObjectLoader(relativePath);
+        loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
+        //loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
+        loadedAsset.transform.SetParent(transform);
         Debug.Log("object load complete");
 
         return loadedAsset;

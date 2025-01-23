@@ -12,9 +12,9 @@ public class LoaderModule3 : MonoBehaviour
 
         loadedAsset = await ObjectLoader(relativePath);
         loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
-        //loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
+        // TODO: object rotation look at camera.
         loadedAsset.transform.SetParent(transform);
-        Debug.Log("object load complete");
+        Debug.Log("object load complete : " + loadedAsset.name);
 
         return loadedAsset;
     }

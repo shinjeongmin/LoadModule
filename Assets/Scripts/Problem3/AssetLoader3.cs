@@ -59,6 +59,7 @@ public class AssetLoader3 : MonoBehaviour
                 if (task.Status == TaskStatus.RanToCompletion)
                 {
                     GameObject loadedAsset = task.Result;
+                    Debug.Log("object load complete : " + paths[i]);
                 }
             });
         }

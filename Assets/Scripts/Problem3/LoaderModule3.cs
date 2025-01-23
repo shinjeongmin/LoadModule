@@ -56,7 +56,7 @@ public class LoaderModule3 : MonoBehaviour
             // vertex
             if (trimmedLine.StartsWith("v "))
             {
-                string[] parts = trimmedLine.Split(' ');
+                string[] parts = trimmedLine.Split(new[] { ' ', '\t' }, System.StringSplitOptions.RemoveEmptyEntries);
                 if (parts.Length >= 4)
                 {
                     float x = float.Parse(parts[1]);

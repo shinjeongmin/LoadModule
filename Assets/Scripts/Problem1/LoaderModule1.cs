@@ -11,6 +11,9 @@ public class LoaderModule1 : MonoBehaviour
     public void LoadAsset(string assetName)
     {   
         string relativePath = SliceRelativePath(assetName);
+        if (relativePath == null)
+            Debug.LogError("Can load obj only in project path.");
+
         Debug.Log("LoadAsset : " + relativePath);
         loadedPrefab = AssetDatabase.LoadAssetAtPath<GameObject>(relativePath);
 
@@ -20,6 +23,9 @@ public class LoaderModule1 : MonoBehaviour
 
     private string SliceRelativePath(string path){
         int index = path.IndexOf("Assets/Models/");
+
+        if (index == -1)
+            return null;
         return path.Substring(index);
     }
 }

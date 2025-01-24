@@ -9,18 +9,11 @@ public class LoaderModule2 : MonoBehaviour
     private int mainThreadYieldCnt = 0;
     private int mainThreadYieldCntMax = 10000;
     public async Task<GameObject> LoadAssetAsync(string path){
-        string relativePath = SliceRelativePath(path);
-
-        loadedAsset = await ObjectLoader(relativePath);
+        loadedAsset = await ObjectLoader(path);
         Debug.Log("object load complete");
-        loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
+        loadedAsset.name = path.Split('/')[path.Split('/').Length - 1];
 
         return loadedAsset;
-    }
-
-    private string SliceRelativePath(string path){
-        int index = path.IndexOf("Assets/Models/");
-        return path.Substring(index);
     }
 
     private async Task<GameObject> ObjectLoader(string path)

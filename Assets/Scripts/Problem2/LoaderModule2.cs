@@ -111,6 +111,12 @@ public class LoaderModule2 : MonoBehaviour
 
                     // obj face is 1-based indexing convert to 0-based indexing
                     int vertexIndex = int.Parse(vertexInfo[0]) - 1;
+
+                    if (vertexIndex < 0 || vertexIndex >= vertices.Count)
+                    {
+                        Debug.LogError($"Invalid vertex index: {vertexIndex}");
+                    }
+
                     faces.Add(vertexIndex);
                 }
             }
@@ -126,6 +132,7 @@ public class LoaderModule2 : MonoBehaviour
 
         // mesh component
         Mesh mesh = new Mesh();
+        if (vertices.Count > 65000) mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.vertices = vertices.ToArray();
         mesh.triangles = faces.ToArray();
 

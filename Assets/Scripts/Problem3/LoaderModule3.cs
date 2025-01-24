@@ -131,6 +131,7 @@ public class LoaderModule3 : MonoBehaviour
 
         // mesh component
         Mesh mesh = new Mesh();
+        if (vertices.Count > 65000) mesh.indexFormat = UnityEngine.Rendering.IndexFormat.UInt32;
         mesh.vertices = vertices.ToArray();
         mesh.triangles = faces.ToArray();
 

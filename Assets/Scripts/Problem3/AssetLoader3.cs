@@ -10,9 +10,12 @@ public class AssetLoader3 : MonoBehaviour
     public LoaderModule3 LoaderModule { get; set; }
     public GameObject MainCamera;
     private string projectPath;
+    private List<Vector3> modelMap = new List<Vector3>();
 
     private void Start()
     {
+        InitializeModelMap();
+
         projectPath = Application.dataPath;
 
         // OpenFilePanel's root directory is "Assets"
@@ -45,6 +48,7 @@ public class AssetLoader3 : MonoBehaviour
     public async void Load(List<string> paths)
     {
         List<Task<GameObject>> loadTasks = new List<Task<GameObject>>();
+        int modelCount = 0;
         Debug.Log("Load function");
         for(int i = 0; i < paths.Count; i++)
         {
@@ -62,6 +66,23 @@ public class AssetLoader3 : MonoBehaviour
             await Task.Yield();
             loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
             loadedAsset.transform.SetParent(transform);
+            loadedAsset.transform.position = modelMap[modelCount++];
+        }
+    }
+
+    private void InitializeModelMap()
+    {
+        int rows = 4;
+        int cols = 5;
+        float spacing = 5.0f;
+
+        for (int x = 0; x < rows; x++)
+        {
+            for (int z = 0; z < cols; z++)
+            {
+                Vector3 position = new Vector3(x * spacing, 0, z * spacing);
+                modelMap.Add(position);
+            }
         }
     }
 }

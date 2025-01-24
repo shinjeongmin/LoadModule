@@ -6,12 +6,14 @@ using System.Collections.Generic;
 public class LoaderModule2 : MonoBehaviour
 {
     private GameObject loadedAsset;
-
+    private int mainThreadYieldCnt = 0;
+    private int mainThreadYieldCntMax = 10000;
     public async Task<GameObject> LoadAssetAsync(string path){
         string relativePath = SliceRelativePath(path);
 
         loadedAsset = await ObjectLoader(relativePath);
         Debug.Log("object load complete");
+        loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
 
         return loadedAsset;
     }
@@ -118,6 +120,12 @@ public class LoaderModule2 : MonoBehaviour
                     int vertexIndex = int.Parse(vertexInfo[0]) - 1;
                     faces.Add(vertexIndex);
                 }
+            }
+
+            if (mainThreadYieldCnt++ > mainThreadYieldCntMax)
+            {
+                await Task.Yield();
+                mainThreadYieldCnt = 0;
             }
         }
 

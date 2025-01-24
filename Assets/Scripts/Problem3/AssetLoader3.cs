@@ -10,7 +10,6 @@ public class AssetLoader3 : MonoBehaviour
     public LoaderModule3 LoaderModule { get; set; }
     public GameObject MainCamera;
     private string projectPath;
-    public string assetName = "bunny";
 
     private void Start()
     {
@@ -60,8 +59,7 @@ public class AssetLoader3 : MonoBehaviour
             GameObject loadedAsset = await completedTask;
             Debug.Log("object load complete : " + loadedAsset.name);
 
-            await Task.Yield(); // yield for unity api
-
+            await Task.Yield();
             loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
             loadedAsset.transform.SetParent(transform);
         }

@@ -8,7 +8,6 @@ public class AssetLoader2 : MonoBehaviour
     public LoaderModule2 LoaderModule { get; set; }
     public GameObject MainCamera;
     private string projectPath;
-    public string assetName = "bunny";
 
     private void Start()
     {
@@ -30,7 +29,6 @@ public class AssetLoader2 : MonoBehaviour
         GameObject loadedAsset = await LoaderModule.LoadAssetAsync(path);
         Debug.Log("Asset return");
 
-        loadedAsset.name = assetName;
         loadedAsset.transform.rotation = Quaternion.LookRotation(MainCamera.transform.position);
         loadedAsset.transform.SetParent(transform);
     }

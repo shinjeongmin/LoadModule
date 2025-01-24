@@ -6,6 +6,8 @@ using System.Collections.Generic;
 public class LoaderModule3 : MonoBehaviour
 {
     private GameObject loadedAsset;
+    private int mainThreadYieldCnt = 0;
+    private int mainThreadYieldCntMax = 10000;
 
     public async Task<GameObject> LoadAssetAsync(string path){
         string relativePath = SliceRelativePath(path);
@@ -13,7 +15,6 @@ public class LoaderModule3 : MonoBehaviour
         loadedAsset = await ObjectLoader(relativePath);
 
         loadedAsset.name = relativePath.Split('/')[relativePath.Split('/').Length - 1];
-        //await Task.Yield();
 
         return loadedAsset;
     }
@@ -123,6 +124,12 @@ public class LoaderModule3 : MonoBehaviour
                     int vertexIndex = int.Parse(vertexInfo[0]) - 1;
                     faces.Add(vertexIndex);
                 }
+            }
+
+            if (mainThreadYieldCnt++ > mainThreadYieldCntMax)
+            { // To enable handling unity editor UI during obj loading.
+                await Task.Yield();
+                mainThreadYieldCnt = 0;
             }
         }
 
